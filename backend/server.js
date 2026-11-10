@@ -112,7 +112,7 @@ app.get('/', (_req, res) => {
   res.sendFile(path.join(staticDirectory, 'index.html'));
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Music player running at http://localhost:${PORT}`);
   });
