@@ -110,7 +110,16 @@ npm.cmd run dev
 
 ## Deploy บน Vercel
 
-Import repository นี้เข้า Vercel และตั้ง Root Directory เป็นโฟลเดอร์โปรเจกต์หลัก จากนั้น Deploy ได้เลย โดย `vercel.json` กำหนดคำสั่ง build และโฟลเดอร์ `frontend/dist` ไว้แล้ว ส่วน Express API จะให้บริการผ่าน Serverless Function ใน `api/`
+Import repository นี้เข้า Vercel แล้วตั้งค่าโปรเจกต์ดังนี้:
+
+- **Root Directory:** `./` (โฟลเดอร์หลักที่มี `package.json` และ `vercel.json` ไม่ใช่ `backend/` หรือ `frontend/`)
+- **Framework Preset:** `Other`
+- **Build Command:** `npm run build`
+- **Output Directory:** `frontend/dist`
+- **Install Command:** ใช้ค่าเริ่มต้นของ Vercel (`npm install`)
+- **Environment Variables:** ไม่ต้องกำหนด
+
+คำสั่ง build ที่ root ระบุ workspace ของ frontend โดยตรง จึงไม่เรียก `build` ของ backend ส่วน Express API ถูกนำมาใช้ซ้ำเป็น Vercel Function ผ่าน `api/[...path].js`; frontend เรียก API ผ่าน `/api/...` บน origin เดียวกัน จึงไม่ต้องตั้งค่า CORS หรือเปิดเผย API key. `npm run dev` ยังคงรัน frontend และ Express backend แยกกันในเครื่องเหมือนเดิม.
 
 ทดสอบ API:
 
